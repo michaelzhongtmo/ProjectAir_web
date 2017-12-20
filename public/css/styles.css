@@ -1,5 +1,6 @@
 body {
-    background: #000000;
+    background: #ffffff;
+    height: 100vh;
 }
 
 h1 {
@@ -7,6 +8,32 @@ h1 {
     font-weight: 100;
 }
 
+h2{
+    color:ffffff;
+    font-weight: 100;
+}
+
 p{
-    color: #323232;
+    color: #ffffff;
+}
+
+.pinkBox{
+    width: 50vh;
+    height: auto;
+    background: #ffffff;
+    box-shadow: 2px 3px 10px #9B9B9B;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+    color: #e20074 !important;
+}
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px solid #e20074 !important;
+    box-shadow: 0 1px 0 0 #e20074 !important;
 }

@@ -7,21 +7,81 @@
         <!--Import Google Materialize CSS-->
         <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="./css/styles.css"/>
-        
+
         <!--Import fonts-->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        
+
+        <!--Import icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <!--Importing Javascript-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="./js/materialize.min.js"></script>
-        
+
         <!--Optimizing website for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    
+
     <body>
-        <div>
-            <h1>Project Air</h1>
+        <div class="container">
+            <div class="row valign-wrapper">
+                <div class="col m6 offset-m4 l6 offset-l4">
+                    <div class="valign-wrapper" style="width: auto; height:100vh;">
+                        <div class="pinkBox row">
+                            <div class="row">
+                                <div class="col s12">
+                                    <ul class="tabs">
+                                        <li class="tab col s6 m6 l6"><a href="#login" style="color:#e20074">Login</a></li>
+                                        <li class="tab col s6 m6 l6"><a href="#register" style="color:#e20074">Register</a></li>
+                                    </ul>
+                                </div>
+                                <div id="login">
+                                    <form class="col s12" action="/login" method="get">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="user_name" type="text" class="validate">
+                                                <label for="first_name">Username</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="password" type="password" class="validate">
+                                                <label for="password">Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="text-align: center">
+                                            <button class="btn waves-effect waves-light pink accent-3" type="submit" name="action">Login
+                                                <i class="material-icons right">arrow_forward</i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="register">
+                                    <form class="col s12" action="/register" method="post">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="user_name" type="text" class="validate">
+                                                <label for="first_name">Username</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <input id="password" type="password" class="validate">
+                                                <label for="password">Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="text-align: center">
+                                            <button class="btn waves-effect waves-light pink accent-3" type="submit" name="action">Register
+                                                <i class="material-icons right">arrow_forward</i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
