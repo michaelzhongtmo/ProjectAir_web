@@ -35,8 +35,10 @@
                         <div class="pinkBox">
                             <div class="container">
                                 <div class="row center-align" style="text-align: center;">
-                                    <image style="width:auto; height:70px;"src="/assets/logo.png"></image>
+                                    <image style="width:auto; height: 10vh;"src="/assets/logo.png"></image>
                                 </div>
+
+
                                 <div class="row">
                                     <div class="col s12">
                                         <ul class="tabs">
@@ -47,7 +49,12 @@
 
                                     <!--Login-->
                                     <div id="login">
-                                        <form class="col s12" id="login" action="/login">
+                                        <div class="col s12">
+
+                                            <p class="error_msg" id="error"><%if(error_msg){%><%=error_msg%><%}%></p>
+
+                                        </div>
+                                        <form class="col s12" id="login">
                                             <div class="row">
                                                 <div class="input-field col s12">
                                                     <input id="login_email" type="email" class="validate" name="login_email">
@@ -61,7 +68,7 @@
                                                 </div>
                                             </div>
                                             <div class="row" style="text-align: center">
-                                                <button class="btn waves-effect waves-light pink accent-3" type="submit" name="action">Login
+                                                <button class="btn waves-effect waves-light pink accent-3" id="login_btn" name="login_btn">Login
                                                     <i class="material-icons right">arrow_forward</i>
                                                 </button>
                                             </div>
@@ -70,7 +77,12 @@
 
                                     <!--Registration-->
                                     <div id="register">
-                                        <form class="col s12" action="/register" method="post">
+                                        <div class="row col s12">
+                                            <%if(error_msg){%>
+                                            <p class="error_msg" id="error"><%=error_msg%></p>
+                                            <%}%>
+                                        </div>
+                                        <form class="col s12" id="reg" action="/register" method="post">
                                             <div class="row">
                                                 <div class="input-field col s6">
                                                     <input id="reg_first_name" type="text" class="validate" name="reg_first_name">
@@ -93,8 +105,14 @@
                                                     <label for="password">Password</label>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input id="password2" type="password" class="validate" name="reg_password2">
+                                                    <label for="password">Confirm Password</label>
+                                                </div>
+                                            </div>
                                             <div class="row" style="text-align: center">
-                                                <button class="btn waves-effect waves-light pink accent-3" type="submit" name="action">Register
+                                                <button class="btn waves-effect waves-light pink accent-3" id = "reg_btn" type="submit" name="reg_btn">Register
                                                     <i class="material-icons right">arrow_forward</i>
                                                 </button>
                                             </div>
@@ -107,11 +125,40 @@
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function(){
-                console.log("ready!");
-            });
-        </script>
-
     </body>
+
+    <script>
+        $(document).ready(function(){
+            console.log("Index ejs ready!");
+            firebase.initializeApp(<%-process.env.FIREBASE_CONFIG%>);
+
+            $(login_btn).on('click', function(event){
+                event.preventDefault();
+                console.log('Login Button clicked');
+
+                firebase.auth().signInWithEmailAndPassword($('#login_email').val(), $('#login_password').val()).catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    $("#error").replaceWith("<p class='error_msg' id='error'>" + error.message + "<p>");
+                    console.log(error.message);
+                    // ...
+                });
+
+                var user = firebase.auth().currentUser;
+                if(user){
+                    console.log("Currently in index.ejs. User uid is " + user.uid);
+                    $.post('/login', {uid: user.uid}, function(data){
+                        window.location.href = '/loading';
+                    });
+                }
+
+                else{
+                    console.log("user not found");
+                    $("#error").replaceWith("<p class='error_msg' id='error'>" + "Incorreect username or password." + "<p>");
+                }
+            });
+        });
+    </script>
+
 </html>

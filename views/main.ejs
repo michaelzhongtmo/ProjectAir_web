@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Website Title-->
+        <title>Project Air - Main</title>
+        <!--Import Google Materialize CSS-->
+        <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="./css/styles.css"/>
+
+        <!--Import fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+        <!--Import icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Importing Javascript-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="./js/materialize.min.js"></script>
+
+        <!--Importing Firebase JS. Using for Auth.-->
+        <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+
+        <!--Optimizing website for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body class="valign-wrapper">
+        <div class="container" style="width:50vh; height=100%;">
+            <h1>Welcome Back!</h1>
+            <%if(userName){%>
+            <h1 style="color:black"><%-userName%></h1>
+            <%}%>
+            <div>
+                <button class="btn waves-effect waves-light pink accent-3" id="logout_btn" name="logout_btn">Logout
+                    <i class="material-icons right">arrow_forward</i>
+                </button>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        $(document).ready(function(){
+            $(logout_btn).on('click', function(){
+                firebase.initializeApp(<%-process.env.FIREBASE_CONFIG%>);
+                firebase.auth().signOut().then(function() {
+                    // Sign-out successful.
+                    $.post('/logout', function(){
+                        window.location.href = '/loading';
+                    });
+                }).catch(function(error) {
+                    // An error happened.
+                    console.log("signout fialed", error);
+                });
+            })
+        });
+    </script>
+</html>
