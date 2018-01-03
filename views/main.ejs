@@ -25,43 +25,66 @@
     </head>
 
     <body>
+
+
+        <!-- Main Content -->
+        <div class="container" id="main-container">
+            <div class="col s12 m7">
+                <h5 class="header">All Devices</h5>
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <img src="https://lorempixel.com/100/190/nature/6">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Navigation Bar-->
         <nav class="bg-magenta">
             <div class="nav-wrapper" style="margin-left: 10px; margin-right: 10px">
                 <a href="#!" class="brand-logo">Project Air</a>
 
+                <!-- Large-screen navigation menu -->
                 <ul class="right hide-on-med-and-down">
                     <li class="active"><a href="#!"><i class="material-icons left">view_module</i>All Devices</a></li>
                     <li><a href="#!"><i class="material-icons left">account_circle</i>Account Settings</a></li>
                     <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left">exit_to_app</i>Logout</a></li>
                 </ul>
 
-                <ul class="side-nav" id="mobile-demo">
-                    <li>                    
-                        <div class="user-view">
-                            <div class="background">
-                                <img src="./assets/office.jpg">
-                            </div>
-                            <%if(userName){%>
-                            <span class="white-text name"><%-userName%></span>
-                            <%}%>
-                            <%if(userEmail){%>
-                            <span class="white-text email"><%-userEmail%></span>
-                            <%}%>
-                        </div>
-                    </li>
-                    <li><a href="#!"><i class="material-icons">view_module</i>All Devices</a></li>
-                    <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
-                    <li><a class="btn waves-effect waves-light pink accent-3" id="logout_btn" name="logout_btn">Logout</a></li>
-                </ul>
+                <!-- Sandwich menu icon -->
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             </div>
         </nav>
 
-        <!-- Device Card Holders -->
-        <div class="container">
-            <div class="card" style="margin-top: 20px">Testing conent</div>
-        </div>
+        <!-- Small-screen Sandwich bar menu-->
+        <ul class="side-nav" id="mobile-demo">
+            <li>                    
+                <div class="user-view">
+                    <div class="background">
+                        <img src="./assets/office.jpg">
+                    </div>
+                    <%if(userName){%>
+                    <span class="white-text name"><%-userName%></span>
+                    <%}%>
+                    <%if(userEmail){%>
+                    <span class="white-text email"><%-userEmail%></span>
+                    <%}%>
+                </div>
+            </li>
+            <li><a href="#!"><i class="material-icons">view_module</i>All Devices</a></li>
+            <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
+            <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left pink-text">exit_to_app</i><p class="pink-text">Logout</p></a></li>
+        </ul>
+
+
     </body>
 
     <script>

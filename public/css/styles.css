@@ -34,6 +34,7 @@ p{
 }
 
 nav{
+    position: fixed;
     top: 0; /* Position the navbar at the top of the page */
     font-weight: 100;
 }
@@ -60,4 +61,12 @@ nav{
 
 .bg-magenta {
     background-color: #e20074;
+}
+
+i.icon-magenta{
+    color: #e20074;
+}
+
+#main-container{
+    margin-top: 100px;
 }

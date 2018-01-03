@@ -65,4 +65,4 @@ app.post('/login', index.login);
 app.post('/logout', main.logout);
 
 
-app.listen(3000, () => console.log('App running on http://localhost:3000/.'));
+module.exports = app;
