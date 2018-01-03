@@ -7,7 +7,7 @@ exports.view = function(req, res, next){
     admin.auth().getUser(session.uid)
         .then(function(userRecord) {
         console.log("Successfully fetched user data:", userRecord.toJSON());
-        res.render('main', {userName: userRecord.displayName});
+        res.render('main', {userName: userRecord.displayName, userEmail: userRecord.email});
     })
         .catch(function(error) {
         console.log("Error fetching user data:", error);

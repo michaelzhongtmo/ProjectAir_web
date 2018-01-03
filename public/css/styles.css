@@ -14,10 +14,29 @@ h2{
     font-weight: 100;
 }
 
+h3{
+    color:ffffff;
+    font-weight: 100;
+}
+
+h4{
+    color:ffffff;
+    font-weight: 100;
+}
+
+h5{
+    color:ffffff;
+    font-weight: 100;
+}
+
 p{
     color: #ffffff;
 }
 
+nav{
+    top: 0; /* Position the navbar at the top of the page */
+    font-weight: 100;
+}
 .error_msg{
     color: red;
 }
@@ -37,4 +56,8 @@ p{
 .input-field input:focus {
     border-bottom: 1px solid #e20074 !important;
     box-shadow: 0 1px 0 0 #e20074 !important;
+}
+
+.bg-magenta {
+    background-color: #e20074;
 }
