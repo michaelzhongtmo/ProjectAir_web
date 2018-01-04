@@ -71,8 +71,25 @@ i.icon-magenta{
     color: #e20074;
 }
 
+.charge-great{
+    color: #4CAF50;
+}
+
 .charge-good{
-    color: #09B119;
+    color: #CDDC39;
+}
+
+.charge-danger{
+    color: #FF9800;
+}
+
+.charge-bad{
+    color: #FF5722;
+}
+
+.device-icon{
+    height: 300px;
+    width: auto;
 }
 
 #main-container{
