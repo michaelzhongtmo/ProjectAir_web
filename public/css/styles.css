@@ -63,10 +63,18 @@ nav{
     background-color: #e20074;
 }
 
+.text-magenta{
+    color: #e20074;
+}
+
 i.icon-magenta{
     color: #e20074;
 }
 
+.charge-good{
+    color: #09B119;
+}
+
 #main-container{
-    margin-top: 100px;
+    margin-top: 85px;
 }
