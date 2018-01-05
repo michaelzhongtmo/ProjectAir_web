@@ -88,8 +88,15 @@ i.icon-magenta{
 }
 
 .device-icon{
-    height: 300px;
+    height: 200px;
     width: auto;
+    margin-left: 38px;
+    margin-right: 38px;
+}
+
+.card-image{
+    width: 200px;
+    height: auto;
 }
 
 #main-container{
