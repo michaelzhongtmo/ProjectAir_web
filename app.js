@@ -8,6 +8,7 @@ var index = require('./route/index');
 var loading = require('./route/loading')
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var addPad = require('./route/addPad');
 //Openning connection to Firebase Database
 
 
@@ -58,11 +59,11 @@ app.get('/', index.view);
 app.get('/loading', loading.view);
 app.get('/main', main.view);
 app.get('/loading_task', loading.task);
-
+app.get('/addPad', addPad.view);
 
 app.post('/register', index.register);
 app.post('/login', index.login);
 app.post('/logout', main.logout);
-
+app.post('/addPad', addPad.addPad);
 
 module.exports = app;

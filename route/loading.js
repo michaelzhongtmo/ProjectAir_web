@@ -7,13 +7,24 @@ exports.task = function (req, res, next){
     var session = req.session;
     var email = session.login_email;
     var password = session.login_password;
+    var admin = require("firebase-admin");
+    var db = admin.database();
 
     // If calling action is Login
     if(session.tag == "login"){
         console.log("currently in route.loading.js task method");
         var uid = session.uid;
         if(uid){
-            res.redirect('/main');
+            var ref = db.ref('/users');
+            ref.child(session.uid).child('pad').once('value', function(snapshot){
+                if(snapshot.val() === null){
+                    console.log("Login user does not have a pad assigned: " + snapshot.val());
+                    res.redirect('/addPad');
+                }
+                else
+                    // Redirect to main page
+                    res.redirect('/main');
+            });
         }
     }
 
@@ -30,10 +41,8 @@ exports.task = function (req, res, next){
         console.log("EM: ", session.email);
         console.log("PW: ", session.password);
 
-        var admin = require("firebase-admin");
-
         console.log(email);
-        
+
         // Checking to see if user already exists.
         admin.auth().getUserByEmail(email)
             .then(function(userRecord) {
@@ -45,7 +54,7 @@ exports.task = function (req, res, next){
             res.redirect('/');
         })
 
-            // If cannot find user by email, create user.
+        // If cannot find user by email, create user.
             .catch(function(error) {
             console.log("\nFailed to fetch user data", error);
             admin.auth().createUser({
@@ -63,10 +72,9 @@ exports.task = function (req, res, next){
                 session.uid = userRecord.uid;
 
                 console.log("\nChecking database for user record.");
-                
+
                 // Checking if user's role has been assigned
-                var db = admin.database();
-                var ref = db.ref("/userRole");
+                var ref = db.ref("/users");
                 ref.child(session.uid).once('value', function(snapshot){
 
                     // If user role hasn't been assigned, assign role.
@@ -75,7 +83,7 @@ exports.task = function (req, res, next){
                             role: "user"
                         });
                         console.log("User role assigned");
-                        res.redirect("/main");
+                        res.redirect("/addPad");
                     }
 
                     // If user role has already been assigned, mark error.
@@ -97,12 +105,59 @@ exports.task = function (req, res, next){
 
     // If calling action is Logout.
     else if(session.tag == "logout"){
-
         console.log("In loading.js. Logging out");
         session.destroy(function(error){
             if(error)
                 console.log("In loading.js. Ualbe to destroy session during logout.");
         });
         res.redirect('/');
-    }    
+    }
+
+    // Setting pad to user's account. TODO: Check in pad db to see if pad exists.
+    else if(session.tag == "addPad"){
+        console.log("\nCurrently in addPad addPad.js");
+
+        console.log("Accessing user's pads data on Firebase");
+        var userRef = db.ref("/users/"+session.uid);
+        var userPadRef = db.ref("/users/"+session.uid+"/pad");
+        var padRef = db.ref("/pads")
+
+        userPadRef.once('value', function(snapshot){
+            console.log("Checking if user has pads");
+
+            if(snapshot.val() !== null){
+                console.log("User has pad assigned.", snapshot.val());
+                console.log("Redirecting to main page")
+                res.redirect('/main');
+            }
+
+            else{
+                console.log("User does not have Pad assigned. Creating Pad.");
+                
+                //Adding new pad to Pads database and saving unique key for pad 
+                var newPadKeyRef = padRef.push({
+                    owner: session.uid
+                });
+
+                // Saving the unique key
+                var newPadKey = newPadKeyRef.key;
+                
+                console.log("New Pad unique key is: " + newPadKey)
+
+                // Updating pad on user's Pad Record
+                userRef.update({
+                    "pad": newPadKey
+                });
+                
+                console.log("Redirecting to main page");
+                res.redirect('/main');
+            }
+
+        }).catch(function(error){
+            session.error = error;
+            console.log("Error occured while checking if user has pad", error);
+            console.log("Redirecting back to login page.");
+            res.redirect('/');
+        });
+    }
 }
