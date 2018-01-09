@@ -3,7 +3,7 @@
     <head>
         <!--Website Title-->
         <title>Project Air - Main</title>
-
+        
         <!--Import Google Materialize CSS-->
         <link type="text/css" rel="stylesheet" href="./css/materialize.min.css" media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="./css/styles.css"/>
@@ -30,40 +30,30 @@
         <div class="container" id="main-container">
             <div class="col s12 m7">
                 <h4 class="header">All Pads</h4>
-
-                <%if(padArray.length != 0){%>
-                <%console.log("User has pads " + padArray)%>
-                <%for(var i = 0; i < padArray.length; i++){%>
-
+                
                 <div class="card horizontal hoverable">
                     <div class="card-image valign-wrapper hide-on-small-only">
-                        <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fpad.jpg?alt=media&token=de3c69cb-b17f-4828-bbaf-db496c0f5d36">
+                        <img class="device-icon" src="https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/samsung/samsung-galaxy-note8/black/samsung-galaxy-note8-black-1-3x.jpg">
                     </div>
                     <div class="card-stacked">
                         <div class="card-content center-align">
                             <div class="hide-on-med-and-up">
-                                <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fpad.jpg?alt=media&token=de3c69cb-b17f-4828-bbaf-db496c0f5d36">
+                                <img class="device-icon" src="https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/samsung/samsung-galaxy-note8/black/samsung-galaxy-note8-black-1-3x.jpg">
                             </div>
-
-                            <h4 id="padID" name="padID"><%-padArray[i]%></h4>
-                            <h5>30 devices connected</h5>
+                            <h4>Samsung Galaxy Note8</h4>
+                            <p>[Serial Number]</p>
                         </div>
-
-                        <div class="card-content">
-                            <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all</button>
-                            </div>
-                            <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light blue btn" style="margin-bottom: 10px;">More</button>
+                        <div class="horizontal">
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col s12 l4 center-align"><h5>Charging</h5></div>
+                                    <div class="col s12 l4 center-align"><h5>1 hours 32 mins left</h5></div>
+                                    <div class="col s12 l4 center-align"><h5 class="charge-great">70%</h5></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <%}%>
-                <%}%>
-                <%if(!padArray){%>
-                <h4>You don't have any pads linked.</h4>
-                <%}%>
             </div>
         </div>
 
@@ -74,8 +64,12 @@
 
                 <!-- Large-screen navigation menu -->
                 <ul class="right hide-on-med-and-down">
-                    <li class="active"><a href="#!"><i class="material-icons left">view_module</i>All Pads</a></li>
+                    <li class="active"><a href="#!"><i class="material-icons left">view_module</i>Pads</a></li>
+                    
+                    <li class="active"><a href="#!"><i class="material-icons left">devices</i>Devices</a></li>
+                    
                     <li><a href="#!"><i class="material-icons left">account_circle</i>Account Settings</a></li>
+                    
                     <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left">exit_to_app</i>Logout</a></li>
                 </ul>
 

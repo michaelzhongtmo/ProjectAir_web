@@ -136,7 +136,8 @@ exports.task = function (req, res, next){
                 
                 //Adding new pad to Pads database and saving unique key for pad 
                 var newPadKeyRef = padRef.push({
-                    owner: session.uid
+                    owner: session.uid,
+                    picURL: "https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fpad.jpg?alt=media&token=de3c69cb-b17f-4828-bbaf-db496c0f5d36"
                 });
 
                 // Saving the unique key
