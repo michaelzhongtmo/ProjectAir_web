@@ -32,29 +32,28 @@
                 <h4 class="header">All Pads</h4>
 
                 <%if(padArray.length != 0){%>
-                <%console.log("User has pads " + padArray)%>
                 <%for(var i = 0; i < padArray.length; i++){%>
 
                 <div class="card horizontal hoverable">
                     <div class="card-image valign-wrapper hide-on-small-only">
-                        <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fpad.jpg?alt=media&token=de3c69cb-b17f-4828-bbaf-db496c0f5d36">
+                        <%if(padPicURLArray){%>
+                        <img class="device-icon" src="<%=padPicURLArray[i]%>">
+                        <%}%>
                     </div>
                     <div class="card-stacked">
                         <div class="card-content center-align">
                             <div class="hide-on-med-and-up">
-                                <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fpad.jpg?alt=media&token=de3c69cb-b17f-4828-bbaf-db496c0f5d36">
+                                <%if(padPicURLArray){%>
+                                <img class="device-icon" src="<%=padPicURLArray[i]%>">
+                                <%}%>
                             </div>
 
                             <h4 id="padID" name="padID"><%-padArray[i]%></h4>
                             <h5>30 devices connected</h5>
                         </div>
-
                         <div class="card-content">
                             <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all</button>
-                            </div>
-                            <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light blue btn" style="margin-bottom: 10px;">More</button>
+                                <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all devices</button>
                             </div>
                         </div>
                     </div>
@@ -74,8 +73,12 @@
 
                 <!-- Large-screen navigation menu -->
                 <ul class="right hide-on-med-and-down">
-                    <li class="active"><a href="#!"><i class="material-icons left">view_module</i>All Pads</a></li>
+                    <li class="active"><a href="#!"><i class="material-icons left">view_module</i>Charging Pads</a></li>
+
+                    <li><a href="#!"><i class="material-icons left">devices_other</i>Devices</a></li>
+
                     <li><a href="#!"><i class="material-icons left">account_circle</i>Account Settings</a></li>
+
                     <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left">exit_to_app</i>Logout</a></li>
                 </ul>
 
@@ -99,7 +102,8 @@
                     <%}%>
                 </div>
             </li>
-            <li><a href="#!"><i class="material-icons">view_module</i>All Devices</a></li>
+            <li><a href="#!"><i class="material-icons">view_module</i>Charging Pads</a></li>
+            <li><a href="#!"><i class="material-icons">devices_other</i>Devices</a></li>
             <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
             <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left pink-text">exit_to_app</i><p class="text-magenta">Logout</p></a></li>
         </ul>

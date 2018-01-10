@@ -4,14 +4,19 @@ exports.view = function(req, res, next){
     var session = req.session;
     var admin = require('firebase-admin');
     var db = admin.database();
-    var padRef = db.ref("users/" + session.uid + "/pad");
+    var userPadRef = db.ref("users/" + session.uid + "/pad");
+    var padRef = db.ref("/pads");
+    var name;
+    var email
+    var padArray;
+    var padPicURLArray = [];
 
     admin.auth().getUser(session.uid)
         .then(function(userRecord) {
-        session.name = userRecord.displayName;
-        session.email = userRecord.email;
+        name = userRecord.displayName;
+        email = userRecord.email;
 
-        console.log("Successfully fetched user data:", userRecord.toJSON());
+        console.log("\nSuccessfully fetched user data:", userRecord.toJSON());
 
     })
         .catch(function(error) {
@@ -20,18 +25,35 @@ exports.view = function(req, res, next){
         res.redirect('/');
     });
 
-    padRef.once('value').then(function(snapshot){
+    userPadRef.once('value').then(function(snapshot){
+        console.log("Accessing user's pad data.");
         pads = snapshot.val();
-        session.padArray = pads.split(',');
+        padArray = pads.split(',');
+
+        for(i=0; i<padArray.length; i++){
+            console.log("Firebase reference point: " + padRef);
+            console.log("Accessing Pad ID: " + padArray[i]);
+
+            padRef.child(padArray[i]).child("picURL").once('value', function(snapshot){
+                console.log("\nConcacnating picURL: " + snapshot.val());
+
+                padPicURLArray = padPicURLArray.concat(snapshot.val());
+            });
+        }
+
+        // Waiting for firebase async query to finish before rendering page
+        setTimeout(function(){
+            console.log("User owns pad: " + padPicURLArray);
+            // Rendering main page
+            res.render('main', {userName: name, userEmail: email, padArray: padArray, padPicURLArray: padPicURLArray});
+        },500); 
+        
     }).catch(function(error){
         console.log("Cannot access user's pad data", error);
         session.error = error;
-        res.render('/');
+        res.redirect('/');
     });
-
-    console.log("User owns pad: " + session.padArray);
-    // Rendering main page
-    res.render('main', {userName: session.name, userEmail: session.email, padArray: session.padArray});
+    
 }
 
 exports.logout = function (req, res, next){
