@@ -6,15 +6,13 @@ exports.view = function(req, res, next){
     var db = admin.database();
     var userPadRef = db.ref("users/" + session.uid + "/pad");
     var padRef = db.ref("/pads");
-    var name;
-    var email
     var padArray;
     var padPicURLArray = [];
 
     admin.auth().getUser(session.uid)
         .then(function(userRecord) {
-        name = userRecord.displayName;
-        email = userRecord.email;
+        session.name = userRecord.displayName;
+        session.email = userRecord.email;
 
         console.log("\nSuccessfully fetched user data:", userRecord.toJSON());
 
@@ -29,6 +27,7 @@ exports.view = function(req, res, next){
         console.log("Accessing user's pad data.");
         pads = snapshot.val();
         padArray = pads.split(',');
+        console.log("User owns pad: " + padArray);
 
         for(i=0; i<padArray.length; i++){
             console.log("Firebase reference point: " + padRef);
@@ -43,17 +42,25 @@ exports.view = function(req, res, next){
 
         // Waiting for firebase async query to finish before rendering page
         setTimeout(function(){
-            console.log("User owns pad: " + padPicURLArray);
+            console.log("Done. Rendering main page.");
             // Rendering main page
-            res.render('main', {userName: name, userEmail: email, padArray: padArray, padPicURLArray: padPicURLArray});
+            res.render('main', {userName: session.name, userEmail: session.email, padArray: padArray, padPicURLArray: padPicURLArray});
         },500); 
-        
+
     }).catch(function(error){
         console.log("Cannot access user's pad data", error);
         session.error = error;
         res.redirect('/');
     });
-    
+
+}
+
+exports.load = function(req, res, next){
+    console.log("\nCurrently in devices.js.");
+    session = req.session;
+    req.session.tag = "main";
+    res.end();
+    console.log("Exiting devices.js.");
 }
 
 exports.logout = function (req, res, next){

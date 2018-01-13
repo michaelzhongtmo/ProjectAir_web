@@ -113,7 +113,7 @@ exports.task = function (req, res, next){
         res.redirect('/');
     }
 
-    // Setting pad to user's account. TODO: Check in pad db to see if pad exists.
+    // Setting pad to user's account.
     else if(session.tag == "addPad"){
         console.log("\nCurrently in addPad addPad.js");
 
@@ -133,7 +133,7 @@ exports.task = function (req, res, next){
 
             else{
                 console.log("User does not have Pad assigned. Creating Pad.");
-                
+
                 //Adding new pad to Pads database and saving unique key for pad 
                 var newPadKeyRef = padRef.push({
                     owner: session.uid,
@@ -142,14 +142,14 @@ exports.task = function (req, res, next){
 
                 // Saving the unique key
                 var newPadKey = newPadKeyRef.key;
-                
+
                 console.log("New Pad unique key is: " + newPadKey)
 
                 // Updating pad on user's Pad Record
                 userRef.update({
                     "pad": newPadKey
                 });
-                
+
                 console.log("Redirecting to main page");
                 res.redirect('/main');
             }
@@ -160,5 +160,19 @@ exports.task = function (req, res, next){
             console.log("Redirecting back to login page.");
             res.redirect('/');
         });
+    }
+
+    else if(session.tag === "devices"){
+        // Redirecting to devices page
+        console.log("\nCurrently in loading.js devices task.");
+        console.log("Exiting loading.js");
+        res.redirect('/devices');
+    }
+
+    else if(session.tag === "main"){
+        // Redirecting to devices page
+        console.log("\nCurrently in loading.js devices task.");
+        console.log("Exiting loading.js");
+        res.redirect('/main');
     }
 }

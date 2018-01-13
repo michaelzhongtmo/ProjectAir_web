@@ -53,12 +53,39 @@
                         </div>
                         <div class="card-content">
                             <div class="center-align" style="width: 100%;">
+                                <button class="wave-effect waves-light btn" style="margin-bottom: 10px;">Locate Pad</button>
+                            </div>
+                            <div class="center-align" style="width: 100%;">
                                 <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all devices</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <%}%>
+
+                <div class="card horizontal hoverable">
+                    <div class="card-image valign-wrapper hide-on-small-only">
+                        <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fcota.jpg?alt=media&token=d11db43a-7c65-4788-8676-31e082611d6c">
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content center-align">
+                            <div class="hide-on-med-and-up">
+                                <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fcota.jpg?alt=media&token=d11db43a-7c65-4788-8676-31e082611d6c">
+                            </div>
+
+                            <h4 id="padID" name="padID">Pad ID</h4>
+                            <h5>22 devices connected</h5>
+                        </div>
+                        <div class="card-content">
+                            <div class="center-align" style="width: 100%;">
+                                <button class="wave-effect waves-light btn" style="margin-bottom: 10px;">Locate Pad</button>
+                            </div>
+                            <div class="center-align" style="width: 100%;">
+                                <button class="wave-effect waves-light green btn" style="margin-bottom: 10px;">start charging all devices</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <%}%>
                 <%if(!padArray){%>
                 <h4>You don't have any pads linked.</h4>
@@ -75,7 +102,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li class="active"><a href="#!"><i class="material-icons left">view_module</i>Charging Pads</a></li>
 
-                    <li><a href="#!"><i class="material-icons left">devices_other</i>Devices</a></li>
+                    <li><a id="all_devices"><i class="material-icons left">devices_other</i>Devices</a></li>
 
                     <li><a href="#!"><i class="material-icons left">account_circle</i>Account Settings</a></li>
 
@@ -125,7 +152,14 @@
                     // An error happened.
                     console.log("signout fialed", error);
                 });
-            })
+            });
+            
+            $("#all_devices").on('click', function(event){
+                event.preventDefault();
+                $.get('/load_devices', function(){
+                    window.location.href = '/loading';
+                });
+            });
         });
     </script>
 </html>

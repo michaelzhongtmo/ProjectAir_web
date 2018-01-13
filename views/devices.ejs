@@ -27,35 +27,64 @@
 
     <body>
         <!-- Main Content -->
+        <% if(deviceName){%>
         <div class="container" id="main-container">
             <div class="col s12 m7">
                 <h4 class="header">All Pads</h4>
 
+                <%for (i=0; i<deviceName.length; i++){%>
+
                 <div class="card horizontal hoverable">
                     <div class="card-image valign-wrapper hide-on-small-only">
-                        <img class="device-icon" src="https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/samsung/samsung-galaxy-note8/black/samsung-galaxy-note8-black-1-3x.jpg">
+                        <img class="device-icon" src="<%=devicePicURL[i]%>">
                     </div>
                     <div class="card-stacked">
                         <div class="card-content center-align">
                             <div class="hide-on-med-and-up">
-                                <img class="device-icon" src="https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/samsung/samsung-galaxy-note8/black/samsung-galaxy-note8-black-1-3x.jpg">
+                                <img class="device-icon" src="<%=devicePicURL[i]%>">
                             </div>
-                            <h4>Samsung Galaxy Note8</h4>
-                            <p>[Serial Number]</p>
+                            <h4><%=deviceName[i]%></h4>
+                            <p><%=deviceSerial[i]%></p>
                         </div>
                         <div class="horizontal">
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s12 l4 center-align"><h5>Charging</h5></div>
                                     <div class="col s12 l4 center-align"><h5>1 hours 32 mins left</h5></div>
-                                    <div class="col s12 l4 center-align"><h5 class="charge-great">70%</h5></div>
+
+                                    <%if(batteryPercentage[i] >= 80){%>
+                                    <div class="col s12 l4 center-align"><h5 class="charge-great"><%=batteryPercentage[i]%>%</h5></div>
+                                    <%}%>
+                                    <%if(batteryPercentage[i] < 80 && batteryPercentage[i] >= 50){%>
+                                    <div class="col s12 l4 center-align"><h5 class="charge-good"><%=batteryPercentage[i]%>%</h5></div>
+                                    <%}%>
+                                    <%if(batteryPercentage[i] < 50 && batteryPercentage[i] >= 20){%>
+                                    <div class="col s12 l4 center-align"><h5 class="charge-danger"><%=batteryPercentage[i]%>%</h5></div>
+                                    <%}%>
+                                    <%if(batteryPercentage[i] < 20){%>
+                                    <div class="col s12 l4 center-align"><h5 class="charge-bad"><%=batteryPercentage[i]%>%</h5></div>
+                                    <%}%>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="center-align" style="width: 100%;">
+                                    <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all devices</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <%}%>
             </div>
         </div>
+        <%}%>
+
+        <%if(!deviceName){%>
+        <div class="container" id="main-container"> 
+            <h1>Oops you don't have a device yet.</h1>
+            <h3>"Add Device" coming soon...</h3>
+        </div>
+        <%}%>
 
         <!-- Navigation Bar-->
         <nav class="bg-magenta">
@@ -64,7 +93,7 @@
 
                 <!-- Large-screen navigation menu -->
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#!"><i class="material-icons left">view_module</i>Charging Pads</a></li>
+                    <li><a href="#!" id="charging_pads"><i class="material-icons left">view_module</i>Charging Pads</a></li>
 
                     <li class="active"><a href="#!"><i class="material-icons left">devices_other</i>Devices</a></li>
 
@@ -93,7 +122,7 @@
                     <%}%>
                 </div>
             </li>
-            <li><a href="#!"><i class="material-icons">view_module</i>Charging Pads</a></li>
+            <li><a href="#!" id="charging_pads"><i class="material-icons">view_module</i>Charging Pads</a></li>
             <li><a href="#!"><i class="material-icons">devices_other</i>Devices</a></li>
             <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
             <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left pink-text">exit_to_app</i><p class="text-magenta">Logout</p></a></li>
@@ -116,7 +145,14 @@
                     // An error happened.
                     console.log("signout fialed", error);
                 });
-            })
+            });
+
+            $("#charging_pads").on('click', function(event){
+                event.preventDefault();
+                $.get('/load_main', function(){
+                    window.location.href = '/loading';
+                });
+            });
         });
     </script>
 </html>
