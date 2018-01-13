@@ -39,15 +39,15 @@
                         <img class="device-icon" src="<%=devicePicURL[i]%>">
                     </div>
                     <div class="card-stacked">
-                        <div class="card-content center-align">
-                            <div class="hide-on-med-and-up">
-                                <img class="device-icon" src="<%=devicePicURL[i]%>">
+                        <div class="card-content">
+                            <div class="center-align">
+                                <div class="hide-on-med-and-up">
+                                    <img class="device-icon" src="<%=devicePicURL[i]%>">
+                                </div>
+                                <h5><%=deviceName[i]%></h5>
+                                <p><%=deviceSerial[i]%></p>
                             </div>
-                            <h4><%=deviceName[i]%></h4>
-                            <p><%=deviceSerial[i]%></p>
-                        </div>
-                        <div class="horizontal">
-                            <div class="card-content">
+                            <div class="horizontal">
                                 <div class="row">
                                     <div class="col s12 l4 center-align"><h5>Charging</h5></div>
                                     <div class="col s12 l4 center-align"><h5>1 hours 32 mins left</h5></div>
@@ -65,10 +65,8 @@
                                     <div class="col s12 l4 center-align"><h5 class="charge-bad"><%=batteryPercentage[i]%>%</h5></div>
                                     <%}%>
                                 </div>
-                            </div>
-                            <div class="card-content">
                                 <div class="center-align" style="width: 100%;">
-                                    <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging all devices</button>
+                                    <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging</button>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +91,7 @@
 
                 <!-- Large-screen navigation menu -->
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="#!" id="charging_pads"><i class="material-icons left">view_module</i>Charging Pads</a></li>
+                    <li><a href="#!" id="charging_pads" name="charging_pads"><i class="material-icons left">view_module</i>Charging Pads</a></li>
 
                     <li class="active"><a href="#!"><i class="material-icons left">devices_other</i>Devices</a></li>
 
@@ -122,7 +120,7 @@
                     <%}%>
                 </div>
             </li>
-            <li><a href="#!" id="charging_pads"><i class="material-icons">view_module</i>Charging Pads</a></li>
+            <li><a href="#!" id="charging_pads" name="charging_pads"><i class="material-icons">view_module</i>Charging Pads</a></li>
             <li><a href="#!"><i class="material-icons">devices_other</i>Devices</a></li>
             <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
             <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left pink-text">exit_to_app</i><p class="text-magenta">Logout</p></a></li>
@@ -147,7 +145,7 @@
                 });
             });
 
-            $("#charging_pads").on('click', function(event){
+            $(charging_pads).on('click', function(event){
                 event.preventDefault();
                 $.get('/load_main', function(){
                     window.location.href = '/loading';

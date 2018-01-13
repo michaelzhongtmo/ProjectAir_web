@@ -32,7 +32,7 @@
                 <h4 class="header">All Pads</h4>
 
                 <%if(padArray.length != 0){%>
-                <%for(var i = 0; i < padArray.length; i++){%>
+                    <%for(var i = 0; i < padArray.length; i++){%>
 
                 <div class="card horizontal hoverable">
                     <div class="card-image valign-wrapper hide-on-small-only">
@@ -48,8 +48,8 @@
                                 <%}%>
                             </div>
 
-                            <h4 id="padID" name="padID"><%-padArray[i]%></h4>
-                            <h5>30 devices connected</h5>
+                            <h5 id="padID" name="padID"><%-padArray[i]%></h5>
+                            <p>30 devices connected</p>
                         </div>
                         <div class="card-content">
                             <div class="center-align" style="width: 100%;">
@@ -61,31 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <%}%>
-
-                <div class="card horizontal hoverable">
-                    <div class="card-image valign-wrapper hide-on-small-only">
-                        <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fcota.jpg?alt=media&token=d11db43a-7c65-4788-8676-31e082611d6c">
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content center-align">
-                            <div class="hide-on-med-and-up">
-                                <img class="device-icon" src="https://firebasestorage.googleapis.com/v0/b/project-air-34a3f.appspot.com/o/pads%2Fcota.jpg?alt=media&token=d11db43a-7c65-4788-8676-31e082611d6c">
-                            </div>
-
-                            <h4 id="padID" name="padID">Pad ID</h4>
-                            <h5>22 devices connected</h5>
-                        </div>
-                        <div class="card-content">
-                            <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light btn" style="margin-bottom: 10px;">Locate Pad</button>
-                            </div>
-                            <div class="center-align" style="width: 100%;">
-                                <button class="wave-effect waves-light green btn" style="margin-bottom: 10px;">start charging all devices</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <%}%>
                 <%}%>
                 <%if(!padArray){%>
                 <h4>You don't have any pads linked.</h4>
@@ -102,7 +78,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li class="active"><a href="#!"><i class="material-icons left">view_module</i>Charging Pads</a></li>
 
-                    <li><a id="all_devices"><i class="material-icons left">devices_other</i>Devices</a></li>
+                    <li><a id="all_devices" name="all_devices"><i class="material-icons left">devices_other</i>Devices</a></li>
 
                     <li><a href="#!"><i class="material-icons left">account_circle</i>Account Settings</a></li>
 
@@ -130,7 +106,7 @@
                 </div>
             </li>
             <li><a href="#!"><i class="material-icons">view_module</i>Charging Pads</a></li>
-            <li><a href="#!"><i class="material-icons">devices_other</i>Devices</a></li>
+            <li><a href="#!" id="all_devices" name="all_devices"><i class="material-icons">devices_other</i>Devices</a></li>
             <li><a href="#!"><i class="material-icons">account_circle</i>Account Settings</a></li>
             <li><a href="#!" id="logout_btn" name="logout_btn"><i class="material-icons left pink-text">exit_to_app</i><p class="text-magenta">Logout</p></a></li>
         </ul>
@@ -153,8 +129,8 @@
                     console.log("signout fialed", error);
                 });
             });
-            
-            $("#all_devices").on('click', function(event){
+
+            $(all_devices).on('click', function(event){
                 event.preventDefault();
                 $.get('/load_devices', function(){
                     window.location.href = '/loading';
