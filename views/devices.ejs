@@ -45,28 +45,40 @@
                                     <img class="device-icon" src="<%=devicePicURL[i]%>">
                                 </div>
                                 <h5><%=deviceName[i]%></h5>
-                                <p><%=deviceSerial[i]%></p>
+                                <p>[Serial <%=deviceSerial[i]%>]</p>
                             </div>
                             <div class="horizontal">
-                                <div class="row">
-                                    <div class="col s12 l4 center-align"><h5>Charging</h5></div>
-                                    <div class="col s12 l4 center-align"><h5>1 hours 32 mins left</h5></div>
+                                <div class="card-content">
+                                    <div class="row">
+                                        <%if (deviceChargingState[i] === 1){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-great">Charging</h5></div>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-great"><%=deviceBatteryLife[i]%> left</h5></div>
+                                        <%}%>
 
-                                    <%if(batteryPercentage[i] >= 80){%>
-                                    <div class="col s12 l4 center-align"><h5 class="charge-great"><%=batteryPercentage[i]%>%</h5></div>
-                                    <%}%>
-                                    <%if(batteryPercentage[i] < 80 && batteryPercentage[i] >= 50){%>
-                                    <div class="col s12 l4 center-align"><h5 class="charge-good"><%=batteryPercentage[i]%>%</h5></div>
-                                    <%}%>
-                                    <%if(batteryPercentage[i] < 50 && batteryPercentage[i] >= 20){%>
-                                    <div class="col s12 l4 center-align"><h5 class="charge-danger"><%=batteryPercentage[i]%>%</h5></div>
-                                    <%}%>
-                                    <%if(batteryPercentage[i] < 20){%>
-                                    <div class="col s12 l4 center-align"><h5 class="charge-bad"><%=batteryPercentage[i]%>%</h5></div>
-                                    <%}%>
-                                </div>
-                                <div class="center-align" style="width: 100%;">
-                                    <button class="wave-effect waves-light red btn" style="margin-bottom: 10px;">stop charging</button>
+                                        <%if (deviceChargingState[i] === 0){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-danger">Discharging</h5></div>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-danger"><%=deviceBatteryLife[i]%> left</h5></div>
+                                        <%}%>
+
+                                        <%if(batteryPercentage[i] >= 80){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-great"><%=batteryPercentage[i]%>%</h5></div>
+                                        <%}%>
+
+                                        <%if(batteryPercentage[i] < 80 && batteryPercentage[i] >= 50){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-good"><%=batteryPercentage[i]%>%</h5></div>
+                                        <%}%>
+
+                                        <%if(batteryPercentage[i] < 50 && batteryPercentage[i] >= 20){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-danger"><%=batteryPercentage[i]%>%</h5></div>
+                                        <%}%>
+
+                                        <%if(batteryPercentage[i] < 20){%>
+                                        <div class="col s12 l4 center-align"><h5 class="charge-bad"><%=batteryPercentage[i]%>%</h5></div>
+                                        <%}%>
+                                    </div>
+                                    <div class="center-align" style="width: 100%;">
+                                        <a class="btn wave-effect waves-light red btn white-text stop-charging-btn" style="margin-bottom: 10px;">stop charging</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +143,7 @@
 
     <script>
         $(document).ready(function(){
+            // Navigation onClick handle
             $(".button-collapse").sideNav();
             $(logout_btn).on('click', function(){
                 firebase.initializeApp(<%-process.env.FIREBASE_CONFIG%>);
@@ -145,11 +158,30 @@
                 });
             });
 
+            //Charging pads menu in Nav onClick handler
             $(charging_pads).on('click', function(event){
                 event.preventDefault();
                 $.get('/load_main', function(){
                     window.location.href = '/loading';
                 });
+            });
+
+            // Stop Charging button onClick Handler
+            $(".stop-charging-btn").on('click', function(event){
+                console.log("Button clicked", event);
+                console.log("Button's color is ", $(this).css('background-color'));
+                
+                if($(this).hasClass("red")){
+                    $(this).removeClass("red");
+                    $(this).addClass("green");
+                    $(this).text("start charging");
+                }
+
+                else if ($(this).hasClass("green")){
+                    $(this).removeClass("green");
+                    $(this).addClass("red");
+                    $(this).text("stop charging");
+                }
             });
         });
     </script>

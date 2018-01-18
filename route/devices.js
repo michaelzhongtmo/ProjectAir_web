@@ -12,6 +12,8 @@ exports.view = function(req, res, next){
     var devicePicURL = [];
     var batteryPercentage = [];
     var deviceSerial = [];
+    var deviceBatteryLife = [];
+    var deviceChargingState = [];
 
     console.log("\nCurrently in devices.js view.");
     userDeviceRef.once("value", function(snapshot){
@@ -38,6 +40,16 @@ exports.view = function(req, res, next){
                     console.log("Concating device picture url: " + snapshot.val());
                 });
 
+                deviceRef.child(devicesArray[i]).child("batteryLife").once("value", function(snapshot){
+                    deviceBatteryLife = deviceBatteryLife.concat(snapshot.val());
+                    console.log("Concating device picture url: " + snapshot.val());
+                });
+
+                deviceRef.child(devicesArray[i]).child("chargingState").once("value", function(snapshot){
+                    deviceChargingState = deviceChargingState.concat(snapshot.val());
+                    console.log("Concating device picture url: " + snapshot.val());
+                });
+
                 deviceRef.child(devicesArray[i]).child("batteryPercent").once("value", function(snapshot){
                     batteryPercentage = batteryPercentage.concat(snapshot.val());
                     console.log("Concating device battery percentage : " + snapshot.val());
@@ -49,8 +61,8 @@ exports.view = function(req, res, next){
             console.log("The user owns devices: ", deviceName);
             console.log("The devices' Pic URL: : ", devicePicURL);
             console.log("The devices' Battery Percentage: : ", devicePicURL);
-            res.render('devices', {userName: session.name, userEmail: session.email, deviceName: deviceName, deviceSerial: deviceSerial, devicePicURL: devicePicURL, batteryPercentage: batteryPercentage});
-        }, 500);
+            res.render('devices', {userName: session.name, userEmail: session.email, deviceName: deviceName, deviceSerial: deviceSerial, devicePicURL: devicePicURL, batteryPercentage: batteryPercentage, deviceBatteryLife: deviceBatteryLife, deviceChargingState: deviceChargingState});
+        }, 1000);
 
     }).catch(function(error){
         console.log("Error fetching data", error);
