@@ -8,6 +8,7 @@ exports.view = function(req, res, next){
     var padRef = db.ref("/pads");
     var padArray;
     var padPicURLArray = [];
+    var numOfDevices = [];
 
     admin.auth().getUser(session.uid)
         .then(function(userRecord) {
@@ -38,13 +39,20 @@ exports.view = function(req, res, next){
 
                 padPicURLArray = padPicURLArray.concat(snapshot.val());
             });
+
+            padRef.child(padArray[i]).child("device").once('value', function(snapshot){
+                console.log("Fetching list of devices.");
+                var devices = snapshot.val().split(',');
+                console.log("Devices: ", devices);
+                numOfDevices = numOfDevices.concat(devices.length);
+            });
         }
 
         // Waiting for firebase async query to finish before rendering page
         setTimeout(function(){
             console.log("Done. Rendering main page.");
             // Rendering main page
-            res.render('main', {userName: session.name, userEmail: session.email, padArray: padArray, padPicURLArray: padPicURLArray});
+            res.render('main', {userName: session.name, userEmail: session.email, padArray: padArray, padPicURLArray: padPicURLArray, numOfDevices: numOfDevices});
         },500); 
 
     }).catch(function(error){
@@ -52,7 +60,6 @@ exports.view = function(req, res, next){
         session.error = error;
         res.redirect('/');
     });
-
 }
 
 exports.load = function(req, res, next){

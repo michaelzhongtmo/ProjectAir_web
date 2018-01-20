@@ -51,13 +51,13 @@
                                 <div class="card-content">
                                     <div class="row">
                                         <%if (deviceChargingState[i] === 1){%>
-                                        <div class="col s12 l4 center-align"><h5 class="charge-great">Charging</h5></div>
-                                        <div class="col s12 l4 center-align"><h5 class="charge-great"><%=deviceBatteryLife[i]%> left</h5></div>
+                                        <div class="col s12 l4 center-align"><h5 id="charging-state">Charging</h5></div>
+                                        <div class="col s12 l4 center-align"><h5><%=deviceBatteryLife[i]%> left</h5></div>
                                         <%}%>
 
                                         <%if (deviceChargingState[i] === 0){%>
-                                        <div class="col s12 l4 center-align"><h5 class="charge-danger">Discharging</h5></div>
-                                        <div class="col s12 l4 center-align"><h5 class="charge-danger"><%=deviceBatteryLife[i]%> left</h5></div>
+                                        <div class="col s12 l4 center-align"><h5 id="charging-state">Discharging</h5></div>
+                                        <div class="col s12 l4 center-align"><h5><%=deviceBatteryLife[i]%> left</h5></div>
                                         <%}%>
 
                                         <%if(batteryPercentage[i] >= 80){%>
@@ -77,7 +77,7 @@
                                         <%}%>
                                     </div>
                                     <div class="center-align" style="width: 100%;">
-                                        <a class="btn wave-effect waves-light red btn white-text stop-charging-btn" style="margin-bottom: 10px;">stop charging</a>
+                                        <a class="btn wave-effect waves-light red-btn stop-charging-btn" style="margin-bottom: 10px;">stop charging</a>
                                     </div>
                                 </div>
                             </div>
@@ -170,17 +170,21 @@
             $(".stop-charging-btn").on('click', function(event){
                 console.log("Button clicked", event);
                 console.log("Button's color is ", $(this).css('background-color'));
-                
-                if($(this).hasClass("red")){
-                    $(this).removeClass("red");
-                    $(this).addClass("green");
+
+                if($(this).hasClass("red-btn")){
+                    var chargingState;
+                    $(this).removeClass("red-btn");
+                    $(this).addClass("green-btn");
                     $(this).text("start charging");
+                    $(this).closest(".card-stacked").find("#charging-state").text("Discharging");;
                 }
 
-                else if ($(this).hasClass("green")){
-                    $(this).removeClass("green");
-                    $(this).addClass("red");
+                else if ($(this).hasClass("green-btn")){
+                    $(this).removeClass("green-btn");
+                    $(this).addClass("red-btn");
                     $(this).text("stop charging");
+                    $(this).closest(".card-stacked").find("#charging-state").text("Charging");;
+
                 }
             });
         });

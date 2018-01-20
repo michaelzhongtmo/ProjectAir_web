@@ -63,6 +63,36 @@ nav{
     background-color: #e20074;
 }
 
+.red-btn{
+    background-color: red;
+}
+
+.red-btn:hover{
+    background-color: white;
+    border-color: red;
+    color: red;
+}
+
+.magenta-btn{
+    background-color: #e20074;
+}
+
+.magenta-btn:hover{
+    background-color: white;
+    border-color: #e20074;
+    color: #e20074
+}
+
+.green-btn{
+    background-color: limegreen;
+}
+
+.green-btn:hover{
+    background-color: white;
+    border-color: limegreen;
+    color: limegreen;
+}
+
 .text-magenta{
     color: #e20074;
 }
@@ -98,6 +128,7 @@ i.icon-magenta{
     width: 200px;
     height: auto;
 }
+
 
 #main-container{
     margin-top: 100px;
